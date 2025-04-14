@@ -18,6 +18,7 @@
 
 enum planck_layers {
   _COLEMAK_DH,
+  _QWERTY,
   _LOWER,
   _RAISE,
   _ADJUST
@@ -25,6 +26,9 @@ enum planck_layers {
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
+
+#define COLEMAK PDF(_COLEMAK_DH)
+#define QWERTY PDF(_QWERTY)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -46,11 +50,29 @@ KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,  KC_V,   KC_K,   KC_H,    KC_COMM, KC_
 _______, _______, _______, KC_LGUI, LOWER, KC_SPC, KC_ENT, RAISE,   KC_RALT, _______, _______, _______
 ),
 
+/* QWERTY
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Esc  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      | GUI  |Lower |Space |Enter |Raise | Alt  |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_QWERTY] = LAYOUT_planck_grid(
+KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,   KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ESC,
+_______, _______, _______, KC_LGUI, LOWER, KC_SPC, KC_ENT, RAISE,   KC_RALT, _______, _______, _______
+),
+
 /* Lower
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |      |      |      |      |      | Left | Down |  Up  | Right|      |      |
+ * | Ctrl |      |      |      |      |      |      | Left | Down |  Up  | Right|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|      |      |      |      |      |      |      |      |      |      | Esc  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -59,7 +81,7 @@ _______, _______, _______, KC_LGUI, LOWER, KC_SPC, KC_ENT, RAISE,   KC_RALT, ___
  */
 [_LOWER] = LAYOUT_planck_grid(
 KC_TAB,     KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_DEL,
-KC_LCTL, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______,
+KC_LCTL, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
 KC_LSFT, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_ESC,
 _______, _______, _______, KC_LGUI, _______, KC_SPC,  KC_ENT,  _______, KC_RALT, _______, _______, _______
 ),
@@ -88,15 +110,15 @@ _______, _______, _______, KC_LGUI, _______, KC_SPC,  KC_ENT,  _______, KC_RALT,
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | BOOT | Debug|      |      |      |      |      |      |      | Vol- | Vol+ | Mute |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Glow | Glow>| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|      |      |      |      |
+ * | Glow | Glow>| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|      |      |QWERTY| CLMK |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
 KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
-QK_BOOT, DB_TOGG, _______, _______, _______, _______, _______, _______, _______, KC_VOLD, KC_VOLU, KC_MUTE,
-UG_TOGG, UG_NEXT, UG_HUEU, UG_HUED, UG_SATU, UG_SATD, UG_VALU, UG_VALD, _______, _______, _______, _______,
+KC_LCTL, QK_BOOT, DB_TOGG, _______, _______, _______, _______, _______, _______, KC_VOLD, KC_VOLU, KC_MUTE,
+KC_LSFT, UG_TOGG, UG_NEXT, UG_HUEU, UG_HUED, UG_SATU, UG_SATD, UG_VALU, UG_VALD, QWERTY,  COLEMAK, KC_ESC,
 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
 
